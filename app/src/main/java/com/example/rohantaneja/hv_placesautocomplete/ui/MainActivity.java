@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.rohantaneja.hv_placesautocomplete.R;
+import com.example.rohantaneja.hv_placesautocomplete.adapter.SuggestionsRecyclerViewAdapter;
 import com.example.rohantaneja.hv_placesautocomplete.interfaces.SuggestionClickListener;
 import com.example.rohantaneja.hv_placesautocomplete.network.RetrofitAdapter;
 import com.example.rohantaneja.hv_placesautocomplete.network.response.PlaceBaseResponse;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher, Sugg
 
     private EditText mSearchEditText;
     private RecyclerView mSuggestionsRecyclerView;
+    private SuggestionsRecyclerViewAdapter mSuggestionsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +41,13 @@ public class MainActivity extends AppCompatActivity implements TextWatcher, Sugg
         mSearchEditText = findViewById(R.id.search_edit_text);
         mSearchEditText.addTextChangedListener(this);
 
+        initSuggestionsRecyclerView();
+    }
+
+    private void initSuggestionsRecyclerView() {
         mSuggestionsRecyclerView = findViewById(R.id.suggestions_recycler_view);
+        mSuggestionsAdapter = new SuggestionsRecyclerViewAdapter(this, this);
+        mSuggestionsRecyclerView.setAdapter(mSuggestionsAdapter);
     }
 
     @Override
@@ -73,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher, Sugg
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
                         if (response.body().getPlaceDetails() != null && !response.body().getPlaceDetails().isEmpty()) {
-
+                            //update adapter
                         }
                     } else {
                         Log.i(TAG, "response.body() is null: " + response.message());
