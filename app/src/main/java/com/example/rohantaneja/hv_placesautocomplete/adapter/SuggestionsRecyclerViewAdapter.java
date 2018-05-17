@@ -8,19 +8,23 @@ import android.view.ViewGroup;
 
 import com.example.rohantaneja.hv_placesautocomplete.R;
 import com.example.rohantaneja.hv_placesautocomplete.adapter.viewholder.SuggestionsViewHolder;
+import com.example.rohantaneja.hv_placesautocomplete.interfaces.SuggestionClickListener;
 import com.example.rohantaneja.hv_placesautocomplete.network.response.PlaceDetails;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SuggestionsRecyclerViewAdapter extends RecyclerView.Adapter<SuggestionsViewHolder> {
+public class SuggestionsRecyclerViewAdapter extends RecyclerView.Adapter<SuggestionsViewHolder>
+        implements SuggestionClickListener {
 
     private Context mContext;
     private List<PlaceDetails> mPlaceDetailsList;
+    private SuggestionClickListener mListener;
 
-    public SuggestionsRecyclerViewAdapter(Context context) {
+    public SuggestionsRecyclerViewAdapter(Context context, SuggestionClickListener listener) {
         mContext = context;
         mPlaceDetailsList = new ArrayList<>();
+        mListener = listener;
     }
 
     public void updateList(List<PlaceDetails> itemsList) {
@@ -31,7 +35,7 @@ public class SuggestionsRecyclerViewAdapter extends RecyclerView.Adapter<Suggest
     @Override
     public SuggestionsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_place_suggestion, parent, false);
-        return new SuggestionsViewHolder(v);
+        return new SuggestionsViewHolder(v, this);
     }
 
     @Override
@@ -43,5 +47,10 @@ public class SuggestionsRecyclerViewAdapter extends RecyclerView.Adapter<Suggest
     @Override
     public int getItemCount() {
         return mPlaceDetailsList == null ? 0 : mPlaceDetailsList.size();
+    }
+
+    @Override
+    public void onSuggestionClicked(PlaceDetails place) {
+        mListener.onSuggestionClicked(place);
     }
 }

@@ -7,17 +7,20 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.rohantaneja.hv_placesautocomplete.R;
+import com.example.rohantaneja.hv_placesautocomplete.interfaces.SuggestionClickListener;
 import com.example.rohantaneja.hv_placesautocomplete.network.RetrofitAdapter;
 import com.example.rohantaneja.hv_placesautocomplete.network.response.PlaceBaseResponse;
+import com.example.rohantaneja.hv_placesautocomplete.network.response.PlaceDetails;
 import com.example.rohantaneja.hv_placesautocomplete.util.Constants;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements TextWatcher {
+public class MainActivity extends AppCompatActivity implements TextWatcher, SuggestionClickListener {
 
     public static final String TAG = MainActivity.class.getName();
 
@@ -70,9 +73,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
                         if (response.body().getPlaceDetails() != null && !response.body().getPlaceDetails().isEmpty()) {
-                            Log.i(TAG, response.body().getPlaceDetails().get(0).getName());
-                            Log.i(TAG, response.body().getPlaceDetails().get(0).getPlaceId());
-                            Log.i(TAG, response.body().getPlaceDetails().get(0).getIcon());
+
                         }
                     } else {
                         Log.i(TAG, "response.body() is null: " + response.message());
@@ -87,5 +88,10 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
                 Log.i(TAG, "onFail(): " + t.getMessage());
             }
         });
+    }
+
+    @Override
+    public void onSuggestionClicked(PlaceDetails place) {
+        Toast.makeText(this, place.getName(), Toast.LENGTH_SHORT).show();
     }
 }

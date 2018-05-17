@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="dimen_8">8dp</dimen>
     <dimen name="dimen_16">16dp</dimen>
     <dimen name="dimen_32">32dp</dimen>
+    <dimen name="textsize_18">18sp</dimen>
     <dimen name="textsize_24">24sp</dimen>
 
     <dimen name="welcome_text_margin">@dimen/dimen_32</dimen>
     <dimen name="welcome_text_size">@dimen/textsize_24</dimen>
+    <dimen name="suggestion_name_text_size">@dimen/textsize_18</dimen>
     <dimen name="search_edit_text_margin">@dimen/dimen_32</dimen>
+    <dimen name="suggestion_item_padding">@dimen/dimen_8</dimen>
 </resources>
