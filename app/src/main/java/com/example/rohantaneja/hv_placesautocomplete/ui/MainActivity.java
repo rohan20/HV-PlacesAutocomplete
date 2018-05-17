@@ -37,8 +37,6 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
         mSearchEditText.addTextChangedListener(this);
 
         mSuggestionsRecyclerView = findViewById(R.id.suggestions_recycler_view);
-
-        getPlacesFromApi();
     }
 
     @Override
@@ -52,15 +50,17 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
     }
 
     @Override
-    public void afterTextChanged(Editable s) {
-
+    public void afterTextChanged(Editable editable) {
+        if (!editable.toString().isEmpty()) {
+            getPlacesFromApi(editable.toString());
+        }
     }
 
-    private void getPlacesFromApi() {
+    private void getPlacesFromApi(String query) {
         RetrofitAdapter retrofitAdapter = new RetrofitAdapter(Constants.BASE_URL);
         Call<PlaceBaseResponse> apiCall = retrofitAdapter.getPlacesApi().getPlaceSuggestions(
                 Constants.RESULTS_FORMAT.JSON,
-                "delhi",
+                query,
                 Constants.API_KEY
         );
 
