@@ -17,7 +17,7 @@ public class RetrofitAdapter {
         apiService = retrofit.create(PlacesAPIService.class);
     }
 
-    public PlacesAPIService getMoviesAPI() {
+    public PlacesAPIService getPlacesApi() {
         return apiService;
     }
 
