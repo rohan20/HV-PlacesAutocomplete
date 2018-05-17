@@ -69,14 +69,16 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
             public void onResponse(Call<PlaceBaseResponse> call, Response<PlaceBaseResponse> response) {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
-                        Log.i(TAG, response.body().getPlaceDetails().get(0).getName());
-                        Log.i(TAG, response.body().getPlaceDetails().get(0).getPlaceId());
-                        Log.i(TAG, response.body().getPlaceDetails().get(0).getIcon());
+                        if (response.body().getPlaceDetails() != null && !response.body().getPlaceDetails().isEmpty()) {
+                            Log.i(TAG, response.body().getPlaceDetails().get(0).getName());
+                            Log.i(TAG, response.body().getPlaceDetails().get(0).getPlaceId());
+                            Log.i(TAG, response.body().getPlaceDetails().get(0).getIcon());
+                        }
                     } else {
-                        Log.i(TAG, "respose.body() is null: " + response.message());
+                        Log.i(TAG, "response.body() is null: " + response.message());
                     }
                 } else {
-                    Log.i(TAG, "respose is null");
+                    Log.i(TAG, "response is null");
                 }
             }
 

@@ -9,7 +9,7 @@ import retrofit2.http.Query;
 
 public interface PlacesAPIService {
 
-    @GET("/{format}/")
+    @GET("{format}")
     Call<PlaceBaseResponse> getPlaceSuggestions(
             @Path("format") String format,
             @Query("query") String query,
